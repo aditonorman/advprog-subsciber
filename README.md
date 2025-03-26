@@ -95,4 +95,13 @@ This is the place for you to write reflections:
 
 #### Reflection Subscriber-2
 
+1. **Exploring beyond the tutorial code**  
+   I briefly reviewed `src/lib.rs` and discovered how Rocket’s configuration and launch logic is centralized there. Although the tutorial didn’t require changes to it, understanding its role clarified how Rocket builds and mounts routes from each controller module. This gave me greater confidence in structuring future services and organizing code.
 
+
+2. **Observer pattern scalability with multiple instances**  
+   The Observer pattern cleanly decouples publishers from subscribers. Adding more Receiver instances is trivial—each new instance simply registers its callback URL and receives notifications without any changes to the Main app code. However, spawning multiple Main app instances introduces challenges: since each Main instance maintains its own in‑memory subscriber list, they would not share state. To scale the publisher horizontally, we’d need a centralized datastore or message broker so that all Main instances see the same subscriber registry.
+
+
+3. **Testing and Postman documentation enhancements**  
+   I created Postman tests (asserting status codes and response bodies) and added descriptive example requests/responses in the collection documentation. These tests quickly validate API behavior after code changes and provide a living reference for teammates. Investing time in automated request tests and clear docs paid off by catching regressions early and improving collaboration.
