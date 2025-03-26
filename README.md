@@ -86,4 +86,13 @@ This is the place for you to write reflections:
 
 #### Reflection Subscriber-1
 
+1. **Why use RwLock\<\> instead of Mutex\<\>?**  
+   We use `RwLock<Vec<Notification>>` because it allows multiple concurrent readers when simply listing notifications, improving read throughput. Only writes (adding a notification) acquire exclusive access. A `Mutex` would enforce exclusive access for both reads and writes, unnecessarily blocking readers and reducing performance in a read‑heavy scenario.
+
+
+2. **Why Rust requires explicit synchronization for static mutation?**  
+   Unlike Java’s mutable static fields, Rust enforces strict ownership and thread‑safety guarantees at compile time. Static variables in Rust must be immutable by default to prevent data races. To allow mutation, we wrap them in synchronization primitives (like `RwLock` or `DashMap`) and use `lazy_static!` to initialize them safely at runtime. This design ensures that all access to global mutable state is explicit, safe, and free from undefined behavior.
+
 #### Reflection Subscriber-2
+
+
